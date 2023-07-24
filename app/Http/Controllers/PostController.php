@@ -30,22 +30,21 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $posts = Post::all();
-        return Inertia::render('Posts/Index',['posts'=>$posts]);
+        return Inertia::render('Posts/Index', ['posts' => $posts]);
     }
     public function show(Post $post)
     {
         $post->load('user');
         $post->loadCount('reactions');
-        return Inertia::render('Posts/Show',['post'=>$posts]);
+        return Inertia::render('Posts/Show', ['post' => $post]);
     }
     public function like(int $post_id)
     {
-        try{
+        try {
             auth()->user()->likePost($post_id);
-            return Inertia::render('Posts/Index',['message', 'like']);
-        }catch(\Exception $e){
-            return Inertia::render('Posts/Index',['message' => $e->getMessage()]);
-
+            return Inertia::render('Posts/Index', ['message', 'like']);
+        } catch (\Exception $e) {
+            return Inertia::render('Posts/Index', ['message' => $e->getMessage()]);
         }
     }
 }
