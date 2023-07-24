@@ -2,9 +2,9 @@
 import Icon from '@/Icons/Icon.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import SidebarLeft from './Posts/Components/Sidebar/SidebarLeft.vue';
-defineProps({ 
-	title:String, 
-	posts:Array 
+defineProps({
+	title: String,
+	posts: Array
 })
 </script>
 <template>
@@ -61,11 +61,13 @@ defineProps({
 	padding: 0;
 	box-sizing: border-box;
 }
+
 :root {
 	--primary: darkorange;
 	--segundary: #2f2f20;
 	--text-color: #ccc;
 }
+
 .button {
 	border: none;
 	outline: none;
@@ -80,19 +82,24 @@ defineProps({
 	place-items: center;
 	cursor: pointer;
 }
+
 .button:hover {
 	background: #ffa50030;
 }
+
 html {
 	font-family: Arial;
 }
+
 .flexible {
 	display: flex;
 	align-items: center;
 }
+
 body {
 	background-color: #000;
 }
+
 .main {
 	font-size: 1.4rem;
 	display: grid;
@@ -105,16 +112,19 @@ body {
 	max-height: 920px;
 	margin: auto;
 }
+
 .child-block {
 	display: block;
 }
+
 .search-results-list {
 	/*	background-color:var(--segundary);*/
 	border-radius: 0.8em;
 	padding-top: 0.05em;
 	padding-bottom: 0.05em;
 }
-.resents > li {
+
+.resents>li {
 	list-style: none;
 	margin: 0.5em;
 }
@@ -128,35 +138,41 @@ body {
 	display: flex;
 	flex-direction: column;
 }
+
 .main__center-header__nav {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-around;
 }
-.main__center-header__nav > div {
+
+.main__center-header__nav>div {
 	padding: 0.2em;
 	display: grid;
 	text-align: center;
 	place-items: center;
 }
-.main__center-header__nav > div > a {
+
+.main__center-header__nav>div>a {
 	text-decoration: none;
 	color: var(--primary);
 	/*	font-weight: bold;*/
 	text-shadow: 0px 0px 5px gray;
 }
-.main__center-header__nav > div > a.active {
+
+.main__center-header__nav>div>a.active {
 	text-decoration: none;
 	color: var(--primary);
 	text-shadow: 0px 0px 5px gray;
 }
+
 .main__center-header__title {
 	font-size: 1em;
 	font-weight: normal;
 	display: flex;
 	gap: 0.2em;
 }
+
 .main__sidebar-right {
 	display: none;
 	width: 100%;
@@ -166,12 +182,14 @@ body {
 	min-width: calc(calc(1em * 10) + 1.2em);
 	width: calc(calc(1em * 12) + 1.2em);
 }
+
 .sidebar-right__search {
 	display: flex;
 	padding: 0.5em;
 	outline: 1.5px solid var(--primary);
 	border-radius: 0.9em;
 }
+
 .sidebar-right__search-input {
 	width: 100%;
 	border: none;
@@ -190,6 +208,7 @@ body {
 	margin-top: 1em;
 	width: 100%;
 }
+
 .search-results {
 	margin: auto;
 }
@@ -199,12 +218,13 @@ body {
 		grid-template-columns: 10em calc(100% - 10em);
 	}
 }
+
 @media (min-width: 990px) {
 	.main {
 		grid-template-columns: 14em calc(100% - 28em) 14em;
 	}
+
 	.main__sidebar-right {
 		display: block;
 	}
-}
-</style>
+}</style>

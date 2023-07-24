@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
@@ -56,9 +57,9 @@ class AuthController extends Controller
     }
     public function logout(Request $request)
     {
+        Auth::logout();
+        Session::flush();
         // auth()->user()->tokens()->delete();
-        return [
-            "all tokens deleted, logou succes"
-        ];
+        return to_route('login');
     }
 }
