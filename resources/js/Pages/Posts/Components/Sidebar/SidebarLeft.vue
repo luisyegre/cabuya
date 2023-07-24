@@ -1,5 +1,5 @@
 <script setup>
-import CloseSessionBtn from '@/Pages/Login/Components/CloseSessionBtn.vue';
+import CloseSessionBtn from '@/Pages/Auth/Components/CloseSessionBtn.vue';
 import PostPreview from '@/Pages/Posts/Components/PostPreview.vue';
 import { defineProps, ref } from 'vue';
 

@@ -17,26 +17,12 @@ class AuthController extends Controller
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
-        // if ($validation->fails())
-        //  return response()->json($validation->errors());
-
-        // $user = User::where('email', $request->email)->first();
-
-        // if (!$user)
-        //  return response()->json(['message' => 'usuario no encontrado'], 404);
-
-        // $rigthPassword = Hash::check($request->password, $user->password);
-
-        // if (!$rigthPassword) {
-        //  return response()
-        //      ->json(['message' => 'la contraseña no es correctos.'], 400);
-        // }
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
             return redirect()->route('home');
         } else {
-            return redirect()->route('login-view');
+            return redirect()->route('login-view')->with('message', 'Email o contraseña incorrectos');
         }
     }
     public function loginView()
@@ -54,13 +40,10 @@ class AuthController extends Controller
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
-
-        if ($validation->fails())
-            return redirect()->route('register-view', $validation->errors());
-        // return response()->json($validation->errors());
+        $validation->validate();
         $userExist = User::where('email', $request->email)->count();
         if ($userExist)
-            return redirect()->route('register-view', ['message' => 'El usuario ya existe']);
+            return to_route('register-view')->with('message', 'El usuario ya existe');
 
         // return response()->json(['message' => 'user already exist'], 400);
 
@@ -69,7 +52,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-        return redirect()->route('login-view', ['message' => 'registrado']);
+        return to_route('login-view')->with('message', 'registrado');
     }
     public function logout(Request $request)
     {

@@ -24,5 +24,5 @@ Route::middleware('auth')->group(function(){
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/login', [AuthController::class, 'loginView'])->name('login-view');
-Route::get('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::get('/register', [AuthController::class, 'registerView'])->name('register-view');

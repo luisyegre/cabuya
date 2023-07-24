@@ -41,7 +41,7 @@ class PostController extends Controller
     public function like(int $post_id)
     {
         try {
-            auth()->user()->likePost($post_id);
+            // auth()->user()->likePost($post_id);
             return Inertia::render('Posts/Index', ['message', 'like']);
         } catch (\Exception $e) {
             return Inertia::render('Posts/Index', ['message' => $e->getMessage()]);
