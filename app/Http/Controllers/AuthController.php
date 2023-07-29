@@ -14,25 +14,25 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        $validation = Validator::make($request->all(), [
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::attempt($credentials)) {
-            return redirect()->route('home');
+        $logged = Auth::attempt(
+            $request->validate([
+                'email' => 'required|email',
+                'password' => 'required'
+            ])
+        );
+        if ($logged) {
+            return to_route('home-view');
         } else {
-            return redirect()->route('login-view')->with('message', 'Email o contraseña incorrectos');
+            return to_route('login-view')->with('message', ['content' => 'Email o contraseña incorrectos', 'type' => 'danger']);
         }
     }
     public function loginView()
     {
-        return Inertia::render('Auth/Login');
+        return inertia('Auth/Login');
     }
     public function registerView()
     {
-        return Inertia::render('Auth/Register');
+        return inertia('Auth/Register');
     }
     public function register(Request $request)
     {
@@ -46,14 +46,12 @@ class AuthController extends Controller
         if ($userExist)
             return to_route('register-view')->with('message', 'El usuario ya existe');
 
-        // return response()->json(['message' => 'user already exist'], 400);
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-        return to_route('login-view')->with('message', 'registrado');
+        return to_route('login-view')->with('message', ['content' => 'Te haz registrado', 'type' => 'success']);
     }
     public function logout(Request $request)
     {

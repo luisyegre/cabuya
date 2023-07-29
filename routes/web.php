@@ -18,8 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
 	Route::get('/', [PostController::class, 'index']);
-	Route::get('/home', [PostController::class, 'index'])->name('home');
+	Route::get('/home', [PostController::class, 'index'])->name('home-view');
 	Route::get('/posts/{post}', [PostController::class, 'show']);
+	Route::post('/posts', [PostController::class, 'store'])->name('create-post');
 	Route::post('/posts/{post}/like', [PostController::class, 'like']);
 	Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

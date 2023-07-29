@@ -1,6 +1,10 @@
 import { createInertiaApp } from '@inertiajs/vue3';
 import { createApp, h } from 'vue';
+// Import our custom CSS
+import '../scss/styles.scss';
 
+// Import all of Bootstrap's JS
+import * as bootstrap from 'bootstrap';
 createInertiaApp({
 	resolve: name => {
 		const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })

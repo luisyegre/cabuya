@@ -7,30 +7,32 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 class PostController extends Controller
 {
-    public function store(Request $request)
+    public function create(Request $request)
     {
         $validation = Validator::make($request->all(), [
             'body' => 'required|string'
         ]);
-        if ($validation->fails())
-            return response()->json($validation->errors());
+        $validation->validate();
 
-        $user = $request->user();
-        $post = $user
-            ->posts()
-            ->create(['body' => $request->body]);
+        $user = Auth::user();
+        $post = Post::create(['body' => $request->body, 'user_id' => $user->id]);
 
-        return $post;
+        to_route('home')->with('response', 'post creado');
     }
     public function index(Request $request)
     {
-        $posts = Post::all();
-        return Inertia::render('Posts/Index', ['posts' => $posts]);
+        $posts = Post::all()
+            ->sortDesc()
+            ->load('user')
+            ->loadCount('reactions');
+        // Log::debug('index PostController');
+        return Inertia::render('Posts/Index', ['posts' => $posts->values(), 'user' => Auth::user()]);
     }
     public function show(Post $post)
     {

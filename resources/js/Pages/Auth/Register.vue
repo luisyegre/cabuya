@@ -1,70 +1,71 @@
 <script setup>
-import { Link, usePage } from '@inertiajs/vue3';
-const { props: { errors } } = usePage()
+import { Link, useForm } from '@inertiajs/vue3';
+defineProps({
+	errors: Object,
+	flash: Object
+})
+const form = useForm({
+	email: null,
+	name: null,
+	password: null,
+})
 
 </script>
 <template>
-	<div class="login-container">
-		<div class="login-form">
-			<h2>Login</h2>
-			<form class="form" method="POST">
-				<input type="text" placeholder="Introduce tu nombre completo" name="name" />
-				<p class="form-input-error" v-if="errors">{{ errors.name }}</p>
-				<input type="email" placeholder="Introduce tu email" name="email" />
-				<p class="form-input-error" v-if="errors">{{ errors.email }}</p>
-				<input type="password" placeholder="Introduce tu contraseña" name="password" />
-				<p class="form-input-error" v-if="errors">{{ errors.password }}</p>
-				<button class="button">Registrarse</button>
+	<div class="back">
+		<div class="form-floating shadow rounded-4 p-4 text-center">
+			<h2>
+				Hola, bienvenido!
+				<!-- <profile-icon /> -->
+			</h2>
+			<h2 class="h6 p-2">Hey!, ¿ Ya tienes una cuenta ? Pues entra
+				<Link href="\login">aqui.</Link>
+			</h2>
+			<form @submit.prevent="form.post('register')">
+				<div class="form-floating mb-3">
+					<input :class="`shadow-sm form-control form-control-lg ${errors.mame ? 'is-invalid' : ''}`"
+						id="name-input" v-model="form.name">
+					<label for="name-input">
+						<span class="text-danger" v-if="errors.name">{{ errors.name
+						}}</span>
+						<span v-else>Name</span>
+					</label>
+					<div class="invalid-feedback"></div>
+				</div>
+				<div class="form-floating mb-3">
+					<input :class="`shadow-sm form-control form-control-lg ${errors.email ? 'is-invalid' : ''}`"
+						id="email-input" v-model="form.email">
+					<label for="email-input">
+						<span class="text-danger" v-if="errors.email">{{ errors.email
+						}}</span>
+						<span v-else>Email</span>
+					</label>
+					<div class="invalid-feedback"></div>
+				</div>
+
+				<div class="form-floating">
+					<input type="password"
+						:class="`shadow-sm form-control form-control-lg ${errors.password ? 'is-invalid' : ''}`"
+						id="password-input" v-model="form.password">
+					<label for="password-input">
+						<span class="text-danger" v-if="errors.password">{{ errors.password
+						}}</span>
+						<span v-else>Password</span>
+					</label>
+					<div class="invalid-feedback"></div>
+				</div>
+				<button :disabled="form.processing" type="submit"
+					class="shadow btn btn-primary w-100 mt-3 btn-lg">Login</button>
 			</form>
-			<Link class="link-form" href="\login">Ya tengo una cuenta.</Link>
+			<div v-show="flash?.message" class="alert  alert-danger mt-3">{{ flash?.message }}</div>
 		</div>
 	</div>
 </template>
-<style>
-.login-container {
+<style scoped>
+.back {
+	display: grid;
+	place-items: center;
 	width: 100vw;
 	height: 100vh;
-	display: grid;
-	font-size: 1.5rem;
-	place-items: center;
-	color: var(--text-color);
-}
-
-.form-input-error {
-	color: red;
-	/*	font-weight: bold;*/
-	letter-spacing: 1px;
-	margin-top: .2em;
-	margin-left: .2em;
-	font-size: .5em;
-}
-
-.login-form {
-	border: 1.5px solid var(--primary);
-	border-radius: 0.8em;
-	padding: 1em;
-	width: 80%;
-	max-width: 18em;
-}
-
-.form {
-	display: flex;
-	flex-direction: column;
-}
-
-.form input {
-	border: 1.5px solid var(--primary);
-	margin-top: 0.5em;
-	padding: 0.4em;
-	font-size: 0.8em;
-	background: transparent;
-	color: var(--text-color);
-	border-radius: 0.8em;
-}
-
-.link-form {
-	color: var(--primary);
-	font-size: 0.5em;
-	margin: auto;
 }
 </style>

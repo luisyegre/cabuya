@@ -2,6 +2,7 @@
 import CloseSessionBtn from '@/Pages/Auth/Components/CloseSessionBtn.vue';
 import PostPreview from '@/Pages/Posts/Components/PostPreview.vue';
 import { defineProps, ref } from 'vue';
+import SidebarNavIten from './SidebarNavIten.vue';
 
 import Icon from '@/Icons/Icon.vue';
 const dropdown = ref(null)
@@ -23,27 +24,18 @@ function toggleDropDown(ev) {
 </script>
 
 <template>
-	<nav class="main__sidebar-left">
+	<nav class="col col-3">
 		<div class="logo"></div>
 		<ul class="sidebar__nav">
-			<li class="sidebar__nav__iten">
-				<icon name="Magnify" />
-				<span class="sidebar__nav__iten-text">Explore</span>
-			</li>
-			<li class="sidebar__nav__iten">
-				<icon name="Bell" />
-				<span class="sidebar__nav__iten-text">Notifications</span>
-			</li>
-			<li class="sidebar__nav__iten">
-				<icon name="Profile" />
-				<span class="sidebar__nav__iten-text">Profile</span>
-			</li>
-			<li class="sidebar__nav__iten">
+			<sidebar-nav-iten icon="Magnify">Buscar</sidebar-nav-iten>
+			<sidebar-nav-iten icon="Bell">Notificaciones</sidebar-nav-iten>
+			<sidebar-nav-iten icon="Profile">Perfil</sidebar-nav-iten>
+			<sidebar-nav-iten icon="News">
 				<button ref="dropdownButton" @click="toggleDropDown" class="nav-iten-button">
 					<icon name="news" />
 					<span class="sidebar__nav__iten-text">Recents</span>
 				</button>
-			</li>
+			</sidebar-nav-iten>
 			<close-session-btn />
 		</ul>
 		<ul ref="dropdown" class="dropdown resents hide">
@@ -54,7 +46,7 @@ function toggleDropDown(ev) {
 	</nav>
 </template>
 <style>
-.hide {
+/*.hide {
 	display: none;
 }
 
@@ -83,7 +75,7 @@ function toggleDropDown(ev) {
 
 .sidebar__nav__iten {
 	list-style: none;
-	/*	background: red;*/
+	background: red;
 	display: grid;
 	border-radius: 0.5em;
 	place-items: center;
@@ -103,7 +95,7 @@ function toggleDropDown(ev) {
 }
 
 .resents {
-	/*	background-color:var(--segundary);*/
+	background-color:var(--segundary);
 	border-top-right-radius: 0.8em;
 	border-bottom-right-radius: 0.8em;
 	padding-top: 0.05em;
@@ -148,7 +140,7 @@ function toggleDropDown(ev) {
 @media (min-width: 990px) {
 	.main__sidebar-left {
 		width: 14em;
-		/*		margin-left: auto;*/
+		margin-left: auto;
 	}
-}
+}*/
 </style>
