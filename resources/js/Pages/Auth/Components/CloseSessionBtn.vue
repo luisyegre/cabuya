@@ -19,18 +19,19 @@ function closeSession() {
 			<button @click="toggleModal" class="button btn-no">NOOO</button>
 		</template>
 	</modal>
-	<button @click="toggleModal" class="button">
+	<button @click="toggleModal" class="px-2 border-2 btn btn-outline-warning btn-lg mx-2">
 		<icon name="Close" />
-		<span class="button-text">cerrar sesion</span>
+		<span class="d-none ">cerrar sesion</span>
 	</button>
 </template>
 <style>
-.button-text {
+/*.button-text {
 	display: none;
 }
-
+*/
 .close-icon {
-	fill: black !important;
+	padding: -2rem !important;
+	fill: rgb(var(--bs-warning-rgb)) !important;
 }
 
 .btn-si,

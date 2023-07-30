@@ -10,11 +10,13 @@ defineProps({
 </script>
 <template>
 	<Head :title="title" />
-	<main class="container-fluid p-0">
-		<SidebarLeft :posts-resents="posts.splice(0, 4)" />
-		<div class="col-12 main-center ">
+	<main class="container-fluid row m-0 p-0">
+		<div class="col-2 m-0 p-0 border-end" style="width: 3.5rem; height: 100vh!important;">
+			<sidebar-left :posts-resents="posts.splice(0, 4)" />
+		</div>
+		<div class="col-10 m-0 p-0 main-center ">
 			<div class="border-bottom">
-				<h1 class="d-flex p-3 main__center-header__title">
+				<h1 class="d-flex p-3 h4">
 					<span v-if="title == 'Home'">
 						<icon name="Home" />
 					</span>

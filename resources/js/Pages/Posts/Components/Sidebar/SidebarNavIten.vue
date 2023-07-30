@@ -4,15 +4,18 @@ import { defineProps } from 'vue';
 const { icon } = defineProps({ icon: String })
 </script>
 <template>
-	<li class="d-flex align-items-center p-2 m-3 rounded-3 hover">
-		<icon :name="icon" />
-		<span class="px-3">
-			<slot></slot>
-		</span>
-	</li>
+	<div class="p-2 h4">
+		<div class="hover rounded-3 d-flex align-items-center justify-content-center" style="width: 2.5rem;height: 2.5rem;">
+			<icon :name="icon" />
+			<span class="d-none ">
+				<slot></slot>
+			</span>
+		</div>
+	</div>
 </template>
-<style scoped lang="scss">
+<style scoped>
 .hover:hover {
-	background: red;
+	cursor: pointer;
+	background: rgb(var(--bs-primary-rgb));
 }
 </style>

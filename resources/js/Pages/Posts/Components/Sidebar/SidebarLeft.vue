@@ -46,31 +46,27 @@ function toggleDropDown(ev) {
 			</div>
 		</div>
 	</div> -->
-	<nav class="offcanvas offcanvas-start col col-3" tabindex="-1" id="offcanvasExample"
-		aria-labelledby="offcanvasExampleLabel">
+	<div class="m-0 p-0" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
 		<div class="logo"></div>
-		<div class="offcanvas-body">
-
-			<ul class="sidebar__nav">
-				<sidebar-nav-iten icon="Magnify">Buscar</sidebar-nav-iten>
-				<sidebar-nav-iten icon="Bell">Notificaciones</sidebar-nav-iten>
-				<sidebar-nav-iten icon="Profile">Perfil</sidebar-nav-iten>
-				<sidebar-nav-iten icon="News">
-					<button ref="dropdownButton" @click="toggleDropDown" class="nav-iten-button">
-						<icon name="news" />
-						<span class="sidebar__nav__iten-text">Recents</span>
-					</button>
-				</sidebar-nav-iten>
-				<close-session-btn />
-			</ul>
-			<ul ref="dropdown" class="dropdown resents hide">
+		<nav class="nav flex-column">
+			<sidebar-nav-iten icon="Magnify">Buscar</sidebar-nav-iten>
+			<sidebar-nav-iten icon="Bell">Notificaciones</sidebar-nav-iten>
+			<sidebar-nav-iten icon="Profile">Perfil</sidebar-nav-iten>
+			<sidebar-nav-iten icon="News">
+				<button ref="dropdownButton" @click="toggleDropDown" class="nav-iten-button">
+					<icon name="news" />
+					<span class="sidebar__nav__iten-text">Recents</span>
+				</button>
+			</sidebar-nav-iten>
+			<close-session-btn />
+			<ul ref="dropdown" class="d-none dropdown resents hide">
 				<li v-for="(post, i) in postsResents" :key="i">
 					<post-preview :post="post" />
 				</li>
 			</ul>
-		</div>
+		</nav>
 
-	</nav>
+	</div>
 </template>
 <style>
 /*.hide {

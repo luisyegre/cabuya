@@ -45,8 +45,8 @@ function postear() {
 					<div class="footer">
 						<div class="reactions d-flex align-items-center">
 							<button style="display: grid;place-items: center;padding:.5rem .5rem .4rem .5rem !important;"
-								class="btn btn-outline-danger p-0 btn-lg rounded-pill">
-								<heart-icon color="red" />
+								class="btn btn-outline-danger p-0 btn-md rounded-pill">
+								<heart-icon color="rgb(var(--bs-danger-rgb))" />
 								<!-- <heart-crack-icon color="red" /> -->
 							</button>
 							<span class="reactions-count h5 mx-2">{{

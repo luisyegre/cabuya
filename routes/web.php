@@ -26,6 +26,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::get('/login', [AuthController::class, 'loginView'])->name('login-view');
+Route::get('/login', fn () => inertia('Auth/Login'))->name('login-view');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
-Route::get('/register', [AuthController::class, 'registerView'])->name('register-view');
+Route::get('/register', fn () => inertia('Auth/Register'))->name('register-view');

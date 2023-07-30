@@ -26,14 +26,6 @@ class AuthController extends Controller
             return to_route('login-view')->with('message', ['content' => 'Email o contraseña incorrectos', 'type' => 'danger']);
         }
     }
-    public function loginView()
-    {
-        return inertia('Auth/Login');
-    }
-    public function registerView()
-    {
-        return inertia('Auth/Register');
-    }
     public function register(Request $request)
     {
         $validation = Validator::make($request->all(), [
