@@ -13,7 +13,7 @@ use Inertia\Inertia;
 
 class PostController extends Controller
 {
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $validation = Validator::make($request->all(), [
             'body' => 'required|string'
@@ -23,12 +23,11 @@ class PostController extends Controller
         $user = Auth::user();
         $post = Post::create(['body' => $request->body, 'user_id' => $user->id]);
 
-        to_route('home')->with('response', 'post creado');
+        to_route('home-view')->with('response', ['content' => 'Post creado', 'type' => 'success']);
     }
     public function index(Request $request)
     {
         $posts = Post::all()
-            ->sortDesc()
             ->load('user')
             ->loadCount('reactions');
         // Log::debug('index PostController');

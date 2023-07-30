@@ -1,16 +1,16 @@
 <script setup>
+import HeartIcon from '@/Icons/Heart.vue';
 import { router } from '@inertiajs/vue3';
-import { ref } from 'vue';
-import HeartIcon from '../../Icons/Heart.vue';
-import HeartCrackIcon from '../../Icons/HeartCrack.vue';
+import { ref, watch } from 'vue';
 import Layout from '../Layout.vue';
 const { posts, user } = defineProps({
 	user: Object,
 	posts: Array
 })
-
-function parseName(name) {
-	return name.split(' ')[0]
+watch(posts, (v) => { console.log(v) })
+function parseName(postUser) {
+	return postUser.user.id == user.id ?
+		'Tú' : postUser.user.name
 }
 const postBody = ref()
 function postear() {
@@ -21,38 +21,68 @@ function postear() {
 <template>
 	<Layout title="Home" :posts="posts">
 		<template #main>
-			<div class="create">
-				<span class="post-username">{{ parseName(user.name) }}</span>
-				<form @submit.prevent="postear" class="form-publish">
-					<textarea class="create-input" placeholder="¿En que piensas?" ref="postBody"></textarea>
-					<button class="button" type="submit">Publicar</button>
+			<div class="p-3 border-bottom">
+				<p class="my-2 h4"><span class="bg-primary badge rounded-3 ">Tú</span></p>
+				<form @submit.prevent="postear" class=" form d-flex flex-column gap-2">
+					<div class="form-floating">
+						<textarea style="height: 60px;" id="formPublish" class="form-control form-control-lg"
+							ref="postBody"></textarea>
+						<label for="formPublish">En que piensas?</label>
+					</div>
+					<button class="btn btn-primary rounded-3" type="submit">Publicar</button>
 				</form>
 			</div>
-			<div v-for="(post, i) in posts" :key="i" class="post-container">
-				<div class="post">
-					<div class="header">
-						<span class="post-username">{{ post.user_id == user.id ? 'Tú' : parseName(post.user.name) }}</span>
-						<span class="post-date">{{ new Date(post.created_at).toDateString() }}</span>
+			<div class="post-container">
+				<div class="border-bottom p-3">
+					<div class="header d-flex justify-content-between align-items-center ">
+						<p class="my-2 h5"><span class="bg-primary rounded-3 badge">{{ parseName(posts[0]) }}</span></p>
+						<span class="my-2 segundary">{{ new Date(posts[0].created_at).toDateString()
+						}}</span>
 					</div>
-					<div class="body">{{ post.body }}</div>
+					<div>
+						<p class="h4">{{ posts[0].body }}</p>
+					</div>
 					<div class="footer">
-						<div class="reactions">
-							<button class="react-button">
+						<div class="reactions d-flex align-items-center">
+							<button style="display: grid;place-items: center;padding:.5rem .5rem .4rem .5rem !important;"
+								class="btn btn-outline-danger p-0 btn-lg rounded-pill">
 								<heart-icon color="red" />
-								<heart-crack-icon color="red" />
+								<!-- <heart-crack-icon color="red" /> -->
 							</button>
-							<span class="reactions-count">{{
-								post.reactions_count
+							<span class="reactions-count h5 mx-2">{{
+								posts[0].reactions_count
 							}}</span>
 						</div>
 					</div>
 				</div>
 			</div>
+			<!-- <template v-for="post in posts">
+				<div class="post-container">
+					<div class="border-bottom p-3">
+						<div class="header d-flex align-items-center items-center">
+							<p class="my-2"><span class="bg-primary badge">{{ parseName(post) }}</span></p>
+							<span class="my-2 mr-auto text-segundary">{{ new Date(post.created_at).toDateString() }}</span>
+						</div>
+						<div class="body">{{ post.body }}</div>
+						<div class="footer">
+							<div class="reactions">
+								<button class="react-button">
+									<heart-icon color="red" />
+									<heart-crack-icon color="red" />
+								</button>
+								<span class="reactions-count">{{
+									post.reactions_count
+								}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</template> -->
 		</template>
 	</Layout>
 </template>
 <style>
-.create {
+/*.create {
 	border-bottom: 1.5px solid var(--primary);
 	padding: 0.5em;
 }
@@ -114,7 +144,7 @@ function postear() {
 }
 
 .reactions {
-	/*    margin-top:.5em;*/
+	margin-top:.5em;
 	display: flex;
 	align-items: center;
 	gap: 0.5em;
@@ -126,5 +156,5 @@ function postear() {
 	background-color: transparent;
 	font-size: 1em;
 	cursor: pointer;
-}
+}*/
 </style>

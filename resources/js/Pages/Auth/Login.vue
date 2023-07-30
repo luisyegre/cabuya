@@ -12,7 +12,7 @@ const form = useForm({
 </script>
 <template>
 	<div class="back">
-		<div class="form-floating shadow rounded-4 p-4 text-center">
+		<div class="form-floating rounded-4 p-4 text-center">
 			<h2>
 				Hola, bienvenido!
 				<!-- <profile-icon /> -->
@@ -43,7 +43,7 @@ const form = useForm({
 					<div class="invalid-feedback"></div>
 				</div>
 				<button :disabled="form.processing" type="submit"
-					class="shadow btn btn-primary w-100 mt-3 btn-lg">Login</button>
+					class="shadow btn btn-primary w-100 mt-3 btn-lg rounded-3">Login</button>
 			</form>
 			<div v-show="flash?.message" :class="`alert  alert-${flash.message?.type} mt-3`">{{ flash.message?.content }}
 			</div>

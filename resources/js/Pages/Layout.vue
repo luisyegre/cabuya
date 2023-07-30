@@ -10,22 +10,22 @@ defineProps({
 </script>
 <template>
 	<Head :title="title" />
-	<main class="row">
+	<main class="container-fluid p-0">
 		<SidebarLeft :posts-resents="posts.splice(0, 4)" />
-		<div class="col-6">
-			<div class="main__center-header">
-				<h1 class="main__center-header__title">
+		<div class="col-12 main-center ">
+			<div class="border-bottom">
+				<h1 class="d-flex p-3 main__center-header__title">
 					<span v-if="title == 'Home'">
 						<icon name="Home" />
 					</span>
-					{{ title }}
+					<span class="mx-2">{{ title }}</span>
 				</h1>
-				<nav class="main__center-header__nav">
-					<div>
-						<Link :class="'active'" href="/home">Home</Link>
+				<nav class="row main__center-header__nav">
+					<div class="col-6 text-center text-primary p-2 col-6">
+						<Link class="text-decoration-none" href="/home">Home</Link>
 					</div>
-					<div>
-						<Link href="/posts">My posts</Link>
+					<div class="col-6 text-center text-primary p-2 col-6">
+						<Link class="text-decoration-none" href="/posts">My posts</Link>
 					</div>
 				</nav>
 			</div>
@@ -33,7 +33,7 @@ defineProps({
 				<slot name="main"></slot>
 			</div>
 		</div>
-		<div class="col-3">
+		<div class="col-3 d-none">
 			<div class="sidebar-right__search">
 				<!-- <magnify-icon /> -->
 				<icon name="Magnify" />

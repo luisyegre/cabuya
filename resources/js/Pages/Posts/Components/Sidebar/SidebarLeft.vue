@@ -24,25 +24,52 @@ function toggleDropDown(ev) {
 </script>
 
 <template>
-	<nav class="col col-3">
-		<div class="logo"></div>
-		<ul class="sidebar__nav">
-			<sidebar-nav-iten icon="Magnify">Buscar</sidebar-nav-iten>
-			<sidebar-nav-iten icon="Bell">Notificaciones</sidebar-nav-iten>
-			<sidebar-nav-iten icon="Profile">Perfil</sidebar-nav-iten>
-			<sidebar-nav-iten icon="News">
-				<button ref="dropdownButton" @click="toggleDropDown" class="nav-iten-button">
-					<icon name="news" />
-					<span class="sidebar__nav__iten-text">Recents</span>
+	<!-- <div>
+		<div class="offcanvas-header">
+			<h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+		</div>
+		<div class="offcanvas-body">
+			<div>
+				Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists,
+				etc.
+			</div>
+			<div class="dropdown mt-3">
+				<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+					Dropdown button
 				</button>
-			</sidebar-nav-iten>
-			<close-session-btn />
-		</ul>
-		<ul ref="dropdown" class="dropdown resents hide">
-			<li v-for="(post, i) in postsResents" :key="i">
-				<post-preview :post="post" />
-			</li>
-		</ul>
+				<ul class="dropdown-menu">
+					<li><a class="dropdown-item" href="#">Action</a></li>
+					<li><a class="dropdown-item" href="#">Another action</a></li>
+					<li><a class="dropdown-item" href="#">Something else here</a></li>
+				</ul>
+			</div>
+		</div>
+	</div> -->
+	<nav class="offcanvas offcanvas-start col col-3" tabindex="-1" id="offcanvasExample"
+		aria-labelledby="offcanvasExampleLabel">
+		<div class="logo"></div>
+		<div class="offcanvas-body">
+
+			<ul class="sidebar__nav">
+				<sidebar-nav-iten icon="Magnify">Buscar</sidebar-nav-iten>
+				<sidebar-nav-iten icon="Bell">Notificaciones</sidebar-nav-iten>
+				<sidebar-nav-iten icon="Profile">Perfil</sidebar-nav-iten>
+				<sidebar-nav-iten icon="News">
+					<button ref="dropdownButton" @click="toggleDropDown" class="nav-iten-button">
+						<icon name="news" />
+						<span class="sidebar__nav__iten-text">Recents</span>
+					</button>
+				</sidebar-nav-iten>
+				<close-session-btn />
+			</ul>
+			<ul ref="dropdown" class="dropdown resents hide">
+				<li v-for="(post, i) in postsResents" :key="i">
+					<post-preview :post="post" />
+				</li>
+			</ul>
+		</div>
+
 	</nav>
 </template>
 <style>

@@ -55,7 +55,7 @@ const form = useForm({
 					<div class="invalid-feedback"></div>
 				</div>
 				<button :disabled="form.processing" type="submit"
-					class="shadow btn btn-primary w-100 mt-3 btn-lg">Login</button>
+					class="rounded-3 shadow btn btn-primary w-100 mt-3 btn-lg">Login</button>
 			</form>
 			<div v-show="flash?.message" class="alert  alert-danger mt-3">{{ flash?.message }}</div>
 		</div>
