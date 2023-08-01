@@ -1,62 +1,55 @@
 <script setup>
 import { router } from '@inertiajs/vue3';
-import { ref } from 'vue';
-import Modal from '../../../Components/Modal.vue';
+import { onMounted } from 'vue';
 import Icon from '../../../Icons/Icon.vue';
-const hide = ref(true)
-function toggleModal() {
-	hide.value = !hide.value
-}
 function closeSession() {
 	router.post('logout')
 }
+onMounted(() => {
+	// const modal = new bootstrap.Modal(document.getElementById('closeSessionModal'))
+})
 </script>
 <template>
-	<modal :hide="hide">
-		<p>¿Enserio deseas cerrar sesion?</p>
-		<template #footer>
-			<button class="button btn-si" @click="closeSession">Si.</button>
-			<button @click="toggleModal" class="button btn-no">NOOO</button>
-		</template>
-	</modal>
-	<button @click="toggleModal" class="px-2 border-2 btn btn-outline-warning btn-lg mx-2">
+	<div class="modal" tabindex="-1" id="closeSesionModal" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content border border-0" style="width:fit-content !important;">
+				<div class="modal-body text-center">
+					<p class="h6">¿Seguro que deseas cerrar sesion?</p>
+					<p class="h6">Te vamos a extrañar :(</p>
+				</div>
+				<div class="p-3 d-flex justify-content-center align-items-center gap-2">
+					<button data-bs-dismiss="modal" type="button" @click="closeSession"
+						class="rounded-3 btn btn-outline-secondary">Si
+						perdon...</button>
+					<button type="button" data-bs-dismiss="modal" class="btn btn-primary rounded-3 ">No, solo
+						bromeo</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<button data-bs-toggle="modal" data-bs-target="#closeSesionModal"
+		class="p-2 close-btn d-flex align-items-center border-2 btn btn-outline-warning btn-lg">
 		<icon name="Close" />
-		<span class="d-none ">cerrar sesion</span>
+		<span class="d-none d-md-inline mx-2 text-warning">cerrar sesion</span>
 	</button>
 </template>
-<style>
+<style scoped>
 /*.button-text {
 	display: none;
 }
 */
-.close-icon {
-	padding: -2rem !important;
+.close-btn {
+	height: 2.5rem;
+	width: 2.5rem;
+}
+
+.icon {
 	fill: rgb(var(--bs-warning-rgb)) !important;
 }
 
-.btn-si,
-.btn-no {
-	padding-left: 1em !important;
-	padding-right: 1em !important;
-}
-
-.btn-si {
-	border: 1.5px solid var(--primary) !important;
-	background-color: transparent !important;
-	color: var(--primary) !important;
-}
-
-@media (min-width: 700px) {
-	.button-text {
-		display: inline;
-	}
-
-	.button {
-		display: flex !important;
-		align-items: center !important;
-		flex-direction: row !important;
-		gap: .5em;
-		padding-left: .8em !important;
+@media (min-width:768px) {
+	.close-btn {
+		width: 100%;
 	}
 }
 </style>

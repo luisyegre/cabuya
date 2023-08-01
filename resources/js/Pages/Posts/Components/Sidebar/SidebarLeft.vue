@@ -4,7 +4,6 @@ import PostPreview from '@/Pages/Posts/Components/PostPreview.vue';
 import { defineProps, ref } from 'vue';
 import SidebarNavIten from './SidebarNavIten.vue';
 
-import Icon from '@/Icons/Icon.vue';
 const dropdown = ref(null)
 const dropdownButton = ref(null)
 
@@ -48,16 +47,10 @@ function toggleDropDown(ev) {
 	</div> -->
 	<div class="m-0 p-0" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
 		<div class="logo"></div>
-		<nav class="nav flex-column">
+		<nav class="nav d-flex text-center flex-column gap-3">
 			<sidebar-nav-iten icon="Magnify">Buscar</sidebar-nav-iten>
 			<sidebar-nav-iten icon="Bell">Notificaciones</sidebar-nav-iten>
 			<sidebar-nav-iten icon="Profile">Perfil</sidebar-nav-iten>
-			<sidebar-nav-iten icon="News">
-				<button ref="dropdownButton" @click="toggleDropDown" class="nav-iten-button">
-					<icon name="news" />
-					<span class="sidebar__nav__iten-text">Recents</span>
-				</button>
-			</sidebar-nav-iten>
 			<close-session-btn />
 			<ul ref="dropdown" class="d-none dropdown resents hide">
 				<li v-for="(post, i) in postsResents" :key="i">
@@ -69,101 +62,22 @@ function toggleDropDown(ev) {
 	</div>
 </template>
 <style>
-/*.hide {
-	display: none;
-}
-
-.nav-iten-button {
-	border: none;
-	outline: none;
-	background: transparent;
-	font-size: 1em;
-	cursor: pointer;
-}
-
-.main__sidebar-left {
-	border-right: 1.5px solid var(--primary);
-	padding: 0.7em;
-	width: 3.4em;
-}
-
 .logo {
 	width: 2em;
 	height: 2em;
-	background-color: var(--primary);
+	background-color: rgb(var(--bs-primary-rgb));
 	border-radius: 0.6em;
 	margin-top: 0.2em;
 	margin-bottom: 0.5em;
+	margin-left: auto;
+	margin-right: auto;
 }
 
-.sidebar__nav__iten {
-	list-style: none;
-	background: red;
-	display: grid;
-	border-radius: 0.5em;
-	place-items: center;
-	padding: 0.4em 0.5em;
-	cursor: pointer;
-}
+@media (min-width:768px) {
+	.logo {
+		margin-left: 0;
+		margin-right: 0;
 
-.sidebar__nav__iten:hover {
-	background: #ffa50030;
-}
-
-.sidebar__nav {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	gap: 0.5em;
-}
-
-.resents {
-	background-color:var(--segundary);
-	border-top-right-radius: 0.8em;
-	border-bottom-right-radius: 0.8em;
-	padding-top: 0.05em;
-	padding-bottom: 0.05em;
-	background: black;
-	border: 1.5px solid orange;
-}
-
-.sidebar__nav__iten-text {
-	display: none;
-}
-
-.dropdown {
-	position: absolute;
-	left: 3.4em;
-	top: 9.5em;
-}
-
-@media (min-width: 700px) {
-	.main__sidebar-left {
-		width: 10em;
-		margin-left: auto;
-	}
-
-	.sidebar__nav__iten-text {
-		display: block;
-		margin-left: 0.5em;
-		color: var(--text-color);
-	}
-
-	.sidebar__nav__iten,
-	.nav-iten-button {
-		display: flex;
-		align-items: center;
-	}
-
-	.dropdown {
-		left: 9.95em;
 	}
 }
-
-@media (min-width: 990px) {
-	.main__sidebar-left {
-		width: 14em;
-		margin-left: auto;
-	}
-}*/
 </style>

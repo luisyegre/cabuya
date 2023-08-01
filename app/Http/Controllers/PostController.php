@@ -10,42 +10,57 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
+use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends Controller
 {
+    public function index()
+    {
+        return inertia('Posts/Index', [
+            'user' => auth()->user(),
+            // 'posts' => Post::all()
+        ]);
+    }
+    public function all()
+    {
+        return response(
+            Post::all()->load(['user'])->loadCount('reactions')
+        );
+    }
+    public function isThereNewPost(Request $request)
+    {
+        //otra solucion mas practica 
+        //es guardar en cache en el backend
+        //y incrementar la cantidad de nuevos posts 
+        //cada vez que se agrega uno.
+        $lastCout = $request->input('lastCout');
+        $count = Post::all()->count();
+        if ($count <= $lastCout) {
+            return response(['message' => 'no hay nuevos posts']);
+        }
+        return response(['message' => 'hay nuevos posts', 'amount' => $count - $lastCout]);
+    }
     public function store(Request $request)
     {
-        $validation = Validator::make($request->all(), [
-            'body' => 'required|string'
-        ]);
-        $validation->validate();
-
         $user = Auth::user();
-        $post = Post::create(['body' => $request->body, 'user_id' => $user->id]);
-
-        to_route('home-view')->with('response', ['content' => 'Post creado', 'type' => 'success']);
-    }
-    public function index(Request $request)
-    {
-        $posts = Post::all()
-            ->load('user')
-            ->loadCount('reactions');
-        // Log::debug('index PostController');
-        return Inertia::render('Posts/Index', ['posts' => $posts->values(), 'user' => Auth::user()]);
+        $post = Post::create([
+            'body' => $request->input('body'),
+            'user_id' => $user->id
+        ]);
+        return response([
+            'message' => ['content' => 'Post creado', 'type' => 'success']
+        ]);
     }
     public function show(Post $post)
     {
         $post->load('user');
         $post->loadCount('reactions');
-        return Inertia::render('Posts/Show', ['post' => $post]);
+        return response($post);
     }
     public function like(int $post_id)
     {
-        try {
-            // auth()->user()->likePost($post_id);
-            return Inertia::render('Posts/Index', ['message', 'like']);
-        } catch (\Exception $e) {
-            return Inertia::render('Posts/Index', ['message' => $e->getMessage()]);
-        }
+        // auth()->user()->likePost($post_id);
+        return response(['message' => 'like']);
+        // inertia('Posts/Index', ['message', 'like']);
     }
 }

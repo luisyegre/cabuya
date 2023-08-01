@@ -21,17 +21,22 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::controller(PostController::class)->group(function () {
-    Route::get('/posts', 'index');
-    Route::middleware('auth:sanctum')->get('/posts/{post}', 'show');
-    Route::middleware('auth:sanctum')->post('/posts/{post}/like', 'like');
-    Route::middleware('auth:sanctum')->post('/posts', 'store');
-});
-Route::controller(UserController::class)->group(function () {
-    Route::middleware('auth:sanctum')->post('/users/profile', 'profile');
-});
-Route::controller(AuthController::class)->group(function () {
-    Route::post('/auth/login', 'login');
-    Route::post('/auth/register', 'register');
-    Route::middleware('auth:sanctum')->post('/auth/logout', 'logout');
-});
+// Route::middleware('auth:sanctum')
+//     ->controller(PostController::class)
+//     ->group(
+//         function () {
+//             Route::get('/posts', 'index');
+//             Route::get('/posts/{post}', 'show');
+//             Route::post('/posts/{post}/like', 'like');
+//             Route::post('/posts', 'store');
+//         }
+//     );
+
+// Route::controller(UserController::class)->group(function () {
+//     Route::middleware('auth:sanctum')->post('/users/profile', 'profile');
+// });
+// Route::controller(AuthController::class)->group(function () {
+//     Route::post('/auth/login', 'login');
+//     Route::post('/auth/register', 'register');
+//     Route::middleware('auth:sanctum')->post('/auth/logout', 'logout');
+// });
