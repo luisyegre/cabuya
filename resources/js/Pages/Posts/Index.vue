@@ -53,8 +53,8 @@ const handleRefecth = async () => {
 					<button class="btn btn-primary rounded-3" @click="createPost()">Publicar</button>
 				</div>
 			</div>
-			<div v-for=" post  in  posts " class="post-container">
-				<post :post="post" :user="user" />
+			<div v-for=" post, i  in  posts " class="post-container">
+				<post :post="post" :user="user" :index="i" />
 			</div>
 		</template>
 	</Layout>

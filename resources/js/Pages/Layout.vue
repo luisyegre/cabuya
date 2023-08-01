@@ -34,7 +34,7 @@ onMounted(() => {
 				</h1>
 				<nav class="row main__center-header__nav">
 					<div class="col-6 text-center text-primary p-2">
-						<Link class="text-decoration-none text-bold" href="/home">Home</Link>
+						<Link class="text-decoration-none text-bold" href="/">Home</Link>
 					</div>
 					<div class="col-6 text-center text-primary p-2 ">
 						<Link class="text-decoration-none" href="/posts">My posts</Link>
@@ -104,6 +104,7 @@ onMounted(() => {
 	overflow: auto;
 	overflow-x: hidden;
 	max-height: 100vh;
+	scroll-behavior: smooth;
 }
 
 .scroller::-webkit-scrollbar {

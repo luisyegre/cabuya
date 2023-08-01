@@ -67,10 +67,17 @@ class PostController extends Controller
         $post->loadCount('reactions');
         return response($post);
     }
-    public function like(int $post_id)
+    public function like(Post $post)
     {
-        // auth()->user()->likePost($post_id);
-        return response(['message' => 'like']);
+        $userId = auth()->user()->id;
+        $reaction = $post->reactions()->where('user_id', $userId)->get();
+        if (sizeof($reaction) == 0) {
+            $post->reactions()->attach($userId);
+            return response(['message' => 'like']);
+        }
+        $post->reactions()->detach($userId);
+        return response(['message' => 'dis like']);
+
         // inertia('Posts/Index', ['message', 'like']);
     }
 }

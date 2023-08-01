@@ -1,12 +1,26 @@
 <script setup>
 import HeartIcon from '@/Icons/Heart.vue';
-const { user } = defineProps({
+const emit = defineEmits(['like'])
+const { user, post, index } = defineProps({
 	post: Object,
+	index: Number,
 	user: Object
 })
 const userName = (postUser) => (
 	postUser.user.id == user.id ? 'Tú' : postUser.user.name
 )
+const likePost = async () => {
+	try {
+		const resp = await fetch('posts/' + post.id + '/like', { method: 'POST' });
+		const json = await resp.json()
+		if (resp.status == 200 && json.message == 'like')
+			post.reactions_count++
+		else if (resp.status == 200)
+			post.reactions_count--
+	} catch (err) {
+		console.log(err)
+	}
+}
 </script>
 <template>
 	<div class="border-bottom p-3">
@@ -20,7 +34,8 @@ const userName = (postUser) => (
 		</div>
 		<div class="footer">
 			<div class="reactions d-flex align-items-center">
-				<button style="display: grid;place-items: center;padding:.5rem .5rem .4rem .5rem !important;"
+				<button @click="likePost"
+					style="display: grid;place-items: center;padding:.5rem .5rem .4rem .5rem !important;"
 					class="btn btn-outline-danger p-0 btn-md rounded-pill">
 					<heart-icon color="rgb(var(--bs-danger-rgb))" />
 					<!-- <heart-crack-icon color="red" /> -->
