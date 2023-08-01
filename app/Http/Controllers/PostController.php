@@ -21,10 +21,20 @@ class PostController extends Controller
             // 'posts' => Post::all()
         ]);
     }
-    public function all()
+    public function all(Request $request)
     {
+        $page = $request->has('page') ? $request->input('page') : 0;
+        $limit = $request->has('limit') ? $request->input('limit') : 15;
+        $posts = Post::orderBy('created_at', 'desc')
+            ->limit($limit)
+            ->offset($page)
+            ->get()
+            ->loadCount('reactions')
+            ->load(['user'])
+            ->toArray();
+
         return response(
-            Post::all()->load(['user'])->loadCount('reactions')
+            $posts
         );
     }
     public function isThereNewPost(Request $request)

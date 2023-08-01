@@ -1,14 +1,14 @@
 <script setup>
-import { computed, defineAsyncComponent, defineProps } from 'vue';
+import { computed, defineAsyncComponent } from 'vue';
 const props = defineProps({
-	name:String,
-	color:String,
-	bgColor:String,
+	name: String,
+	color: String,
+	bgColor: String,
 })
 
 const iconload = computed(
-	()=>defineAsyncComponent(
-		()=> import(`./${(props.name||'Bell')}.vue`)
+	() => defineAsyncComponent(
+		() => import(`./${(props.name || 'Bell')}.vue`)
 	)
 )
 

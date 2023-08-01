@@ -1,10 +1,21 @@
 <script setup>
 import Icon from '@/Icons/Icon.vue';
 import { Head, Link } from '@inertiajs/vue3';
+import { onMounted, ref } from 'vue';
 import SidebarLeft from './Posts/Components/Sidebar/SidebarLeft.vue';
+const center = ref(null)
+const emit = defineEmits(['refetch-post'])
 defineProps({
 	posts: Array,
 	title: String
+})
+onMounted(() => {
+	center.value.addEventListener('scroll', (ev) => {
+		const scrollTopsInScrollHeight = Math.round(center.value.scrollHeight / center.value.scrollTop)
+		if (scrollTopsInScrollHeight <= 1) {
+			emit('refetch-post')
+		}
+	})
 })
 </script>
 <template>
@@ -13,10 +24,10 @@ defineProps({
 		<div class="main-left m-0 p-2 border-end">
 			<sidebar-left :posts-resents="posts" />
 		</div>
-		<div class="m-0 p-0 main-center scroller">
+		<div ref="center" class="m-0 p-0 main-center scroller">
 			<div class="menu border-bottom">
 				<h1 class="d-flex p-3 h4">
-					<span v-if="$page.props.title == 'Home'">
+					<span v-if="title == 'Home'">
 						<icon name="Home" />
 					</span>
 					<span class="mx-2">{{ title }}</span>
@@ -111,12 +122,8 @@ defineProps({
 		max-width: 15rem !important;
 	}
 
-	.main-center {
-		/*		grid-column: 2/3;*/
-	}
-
 	.main {
-		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-template-columns: 1fr 1fr 1fr;
 	}
 }
 

@@ -15,7 +15,7 @@ const form = useForm({
 	<div class="back">
 		<div class="form-floating shadow rounded-4 p-4 text-center">
 			<h2>
-				Hola, bienvenido!
+				👋 Hola, bienvenido!
 				<!-- <profile-icon /> -->
 			</h2>
 			<h2 class="h6 p-2">Hey!, ¿ Ya tienes una cuenta ? Pues entra

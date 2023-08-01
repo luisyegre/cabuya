@@ -14,8 +14,8 @@ onMounted(() => {
 		<div class="modal-dialog">
 			<div class="modal-content border border-0" style="width:fit-content !important;">
 				<div class="modal-body text-center">
-					<p class="h6">¿Seguro que deseas cerrar sesion?</p>
-					<p class="h6">Te vamos a extrañar :(</p>
+					<p class="h5">¿Seguro que deseas cerrar sesión?</p>
+					<p class="h6 text-secondary">Te vamos a extrañar :(</p>
 				</div>
 				<div class="p-3 d-flex justify-content-center align-items-center gap-2">
 					<button data-bs-dismiss="modal" type="button" @click="closeSession"
