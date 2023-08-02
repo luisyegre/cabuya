@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -34,21 +35,23 @@ class PostController extends Controller
             ->toArray();
 
         return response(
-            $posts
+            [
+                'posts' => $posts,
+                'count' => Post::count()
+            ]
         );
     }
-    public function isThereNewPost(Request $request)
+    public function countPosts(Request $request)
     {
         //otra solucion mas practica 
         //es guardar en cache en el backend
         //y incrementar la cantidad de nuevos posts 
         //cada vez que se agrega uno.
-        $lastCout = $request->input('lastCout');
         $count = Post::all()->count();
-        if ($count <= $lastCout) {
-            return response(['message' => 'no hay nuevos posts']);
-        }
-        return response(['message' => 'hay nuevos posts', 'amount' => $count - $lastCout]);
+        return response([
+            'count' => $count,
+            'message' => 'posts',
+        ]);
     }
     public function store(Request $request)
     {

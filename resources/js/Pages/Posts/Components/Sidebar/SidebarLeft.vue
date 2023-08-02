@@ -45,8 +45,12 @@ function toggleDropDown(ev) {
 			</div>
 		</div>
 	</div> -->
-	<div class="m-0 p-0" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-		<div class="logo"></div>
+	<div class="offcanvas offcanvas-start w-100 m-0 p-0" tabindex="-1" id="sidebar-left" aria-labelledby="offcanvas">
+		<div class="offcanvas-header">
+			<div class="logo"></div>
+			<!-- <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5> -->
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+		</div>
 		<nav class="nav d-flex text-center flex-column gap-3">
 			<sidebar-nav-iten icon="Magnify">Buscar</sidebar-nav-iten>
 			<sidebar-nav-iten icon="Bell">Notificaciones</sidebar-nav-iten>

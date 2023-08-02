@@ -18,6 +18,10 @@ Route::middleware('auth:sanctum')->group(function () {
 		'/posts',
 		[PostController::class, 'store']
 	)->name('create-post');
+	Route::get(
+		'/post-count',
+		[PostController::class, 'countPosts']
+	);
 	Route::post(
 		'/posts/{post}/like',
 		[PostController::class, 'like']

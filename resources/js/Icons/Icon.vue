@@ -4,8 +4,12 @@ const props = defineProps({
 	name: String,
 	color: String,
 	bgColor: String,
+	size: Number,
+	customClass: String
 })
-
+const color = computed(() => (
+	props.color || 'rgb(var(--bs-primary-rgb))'
+))
 const iconload = computed(
 	() => defineAsyncComponent(
 		() => import(`./${(props.name || 'Bell')}.vue`)
@@ -14,13 +18,15 @@ const iconload = computed(
 
 </script>
 <template>
-	<b class="icon">
-		<iconload :color="color" />
+	<b :class="'icon ' + customClass">
+		<iconload />
 	</b>
 </template>
 <style>
 .icon {
 	height: fit-content;
 	display: grid;
+	font-size: v-bind(size);
+	fill: v-bind(color);
 }
 </style>

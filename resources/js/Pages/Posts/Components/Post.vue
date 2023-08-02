@@ -21,26 +21,30 @@ const likePost = async () => {
 		console.log(err)
 	}
 }
+
 </script>
 <template>
-	<div class="border-bottom p-3">
+	<div class="card rounded-3 m-2 p-3">
 		<div class="header d-flex justify-content-between align-items-center ">
-			<p class="my-2 h5"><span class="bg-primary rounded-3 badge">{{ userName(post) }}</span></p>
-			<span class="my-2 segundary">{{ new Date(post.created_at).toDateString()
+			<p class="my-2 h6">{{ userName(post) }}</p>
+			<span class="my-2 text-segundary " style="font-size: .8rem;">{{ new Date(post.created_at).toDateString()
 			}}</span>
 		</div>
 		<div>
-			<p class="h4">{{ post.body }}</p>
+			<p class="h5">{{ post.body }}</p>
 		</div>
-		<div class="footer">
+		<div class="footer border-top border-bottom py-1">
 			<div class="reactions d-flex align-items-center">
-				<button @click="likePost"
-					style="display: grid;place-items: center;padding:.5rem .5rem .4rem .5rem !important;"
-					class="btn btn-outline-danger p-0 btn-md rounded-pill">
+				<button @click="likePost" style="
+					display: grid;
+					place-items: center;
+					width: 1.5rem;
+					height:1.5rem;
+					" class="btn btn-outline-danger p-0 btn-sm rounded-pill">
 					<heart-icon color="rgb(var(--bs-danger-rgb))" />
 					<!-- <heart-crack-icon color="red" /> -->
 				</button>
-				<span class="reactions-count h5 mx-2">{{
+				<span class="reactions-count h6 mx-2">{{
 					post.reactions_count
 				}}</span>
 			</div>
