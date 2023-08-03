@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\Notification;
 use App\Models\Post;
 use App\Models\User;
 use Carbon\Carbon;
@@ -73,13 +74,24 @@ class PostController extends Controller
     public function like(Post $post)
     {
         $userId = auth()->user()->id;
-        $reaction = $post->reactions()->where('user_id', $userId)->get();
-        if (sizeof($reaction) == 0) {
+        $reponseBody = ['message' => 'like'];
+        $reaction = $post
+            ->reactions()
+            ->where('user_id', $userId)
+            ->get();
+
+        if (sizeof($reaction) > 0) {
+            $reponseBody['message'] = 'dis like';
+            $post->reactions()->detach($userId);
+        } else {
+            $reponseBody['message'] = 'like';
             $post->reactions()->attach($userId);
-            return response(['message' => 'like']);
         }
-        $post->reactions()->detach($userId);
-        return response(['message' => 'dis like']);
+        $user = $post->user;
+        //notify the owner of post
+        Notification::dispatch($user, $reponseBody['message'])->onQueue('notifications');
+        return response($reponseBody);
+
 
         // inertia('Posts/Index', ['message', 'like']);
     }

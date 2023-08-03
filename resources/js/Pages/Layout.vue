@@ -8,10 +8,11 @@ const menu = reactive({
 	search: false,
 	profile: false,
 })
-const allDeactive = (menu) => !(
+const menuClosed = () => !(
 	menu.notification ||
 	menu.search ||
-	menu.profile
+	menu.profile ||
+	menu.messages
 )
 const emit = defineEmits(['refetch-post'])
 defineProps({
@@ -19,17 +20,22 @@ defineProps({
 	title: String
 })
 const loadNav = (nav) => {
+	closeNav()
+	menu[nav] = true
+}
+const closeNav = () => {
 	for (const key in menu) {
 		menu[key] = false
 	}
-	menu[nav] = true
-
 }
 onMounted(() => {
 	center.value.addEventListener('scroll', (ev) => {
 		const scrollTopsInScrollHeight = Math.round(center.value.scrollHeight / center.value.scrollTop)
 		if (scrollTopsInScrollHeight <= 1) {
-			emit('refetch-post')
+			setTimeout(() => {
+
+				emit('refetch-post')
+			}, 1000)
 		}
 	})
 })
@@ -56,17 +62,17 @@ onMounted(() => {
 						<div id="dropdown-nav " class="dropdown-menu">
 							<div class="mx-2 d-flex align-items-center gap-3">
 
-								<button data-bs-toggle="offcanvas" data-bs-target="#sidebar-left" class="btn p-0  btn-link">
-									<icon size="1.5rem" name="Bell" />
+								<button @click="loadNav('notification')" class="btn p-0 icon-btn btn-dark">
+									<icon size="1.3rem" name="Bell" />
 								</button>
-								<button data-bs-toggle="offcanvas" data-bs-target="#sidebar-left" class="btn p-0 btn-link">
-									<icon size="1.5rem" name="Magnify" />
+								<button @click="loadNav('search')" class="btn p-0 icon-btn btn-dark">
+									<icon size="1.3rem" name="Magnify" />
 								</button>
-								<button data-bs-toggle="offcanvas" data-bs-target="#sidebar-left" class="btn p-0 btn-link">
-									<icon size="1.5rem" name="Profile" />
+								<button @click="loadNav('profile')" class="btn p-0 icon-btn btn-dark">
+									<icon size="1.3rem" name="Profile" />
 								</button>
-								<button data-bs-toggle="offcanvas" data-bs-target="#sidebar-left" class="btn p-0 btn-link">
-									<icon size="1.5rem" name="Message" />
+								<button @click="loadNav('messages')" class="btn p-0 icon-btn btn-dark">
+									<icon size="1.3rem" name="Message" />
 								</button>
 							</div>
 						</div>
@@ -78,22 +84,22 @@ onMounted(() => {
 						</span>
 						<span class="mx-2">{{ title }}</span>
 					</h1>
-					<div class="d-none me-3 d-sm-flex align-items-center gap-3">
-						<button @click="loadNav('notification')" :class="['btn', 'p-1', 'btn-link']">
+					<div class="d-none me-3 d-sm-flex align-items-center gap-2">
+						<button @click="loadNav('notification')" class="icon-btn btn btn-dark p-1 btn-link">
 							<icon size="1.5rem" :color="menu.notification ? 'var(--bs-primary)' : 'var(--bs-secondary)'"
 								name="Bell" />
 						</button>
-						<button @click="loadNav('search')" :class="['btn', 'p-1', 'btn-link']">
+						<button @click="loadNav('search')" class="icon-btn btn btn-dark p-1 btn-link">
 							<icon size="1.5rem" :color="menu.search ? 'var(--bs-primary)' : 'var(--bs-secondary)'"
 								name="Magnify" />
 						</button>
-						<button @click="loadNav('profile')" :class="['btn', 'p-1', 'btn-link']">
+						<button @click="loadNav('profile')" class="icon-btn btn btn-dark p-1 btn-link">
 							<icon size="1.5rem" :color="menu.profile ? 'var(--bs-primary)' : 'var(--bs-secondary)'"
 								name="Profile" />
 						</button>
 					</div>
 				</div>
-				<nav v-if="allDeactive(menu)" class="row main__center-header__nav">
+				<nav v-if="menuClosed()" class="row main__center-header__nav">
 					<div class="col-6 text-center text-primary p-2">
 						<Link :class="[
 							$page.url == '/' ? 'text-primary border-primary' : 'text-secondary',
@@ -120,11 +126,18 @@ onMounted(() => {
 				</nav>
 			</div>
 			<div class="main_content">
-				<slot v-if="allDeactive(menu)" name="main"></slot>
-				<notification v-if="menu.notification" />
-				<search v-if="menu.search" />
-				<profile v-if="menu.profile" />
-				<messages v-if="menu.messages" />
+				<slot v-if="menuClosed()" name="main"></slot>
+				<div class="card border-0" v-if="!menuClosed()">
+					<div class="card-header bg-dark ">
+						<button class="icon-btn rounded-pill btn-dark btn " @click="closeNav()">
+							<icon name="LeftArrow" />
+						</button>
+					</div>
+					<notification v-if="menu.notification" />
+					<search v-if="menu.search" />
+					<profile v-if="menu.profile" />
+					<messages v-if="menu.messages" />
+				</div>
 			</div>
 		</div>
 		<div class="d-none d-lg-block message">
@@ -157,6 +170,13 @@ onMounted(() => {
 	margin-left: auto !important;
 }
 
+.icon-btn {
+	width: 2.5rem;
+	height: 2.5rem;
+	display: grid;
+	place-items: center;
+	border-radius: 50%;
+}
 
 .menu {
 	position: sticky;
