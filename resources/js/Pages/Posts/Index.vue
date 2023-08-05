@@ -7,14 +7,15 @@ import Post from './Components/Post.vue';
 const { user } = defineProps({
 	user: Object
 })
-const posts = ref([])
+// const posts = ref([])
 const obtaining = ref(false)
 const counting = ref(false)
 const page = ref(0)
 const count = ref(0)
 const lastFetchCount = ref(0)
 const form = reactive({ body: '' })
-
+const posts = ref([])
+// const { posts, error } = useFecth(`/posts${page ? '?page=' + page : ''} `)
 onMounted(async () => {
 	await fetchPosts()
 	setInterval(async () => {
@@ -36,7 +37,7 @@ const createPost = async () => {
 }
 const fetchPosts = async (params = {}) => {
 	const { page } = params
-	const resp = await fetch(`/posts${page ? '?page=' + page : ''} `)
+	const resp = await fetch('/posts')
 	const json = await resp.json()
 	lastFetchCount.value = json.count
 	posts.value = [...posts.value, ...json.posts]

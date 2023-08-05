@@ -31,7 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
 		[AuthController::class, 'logout']
 	)->name('logout');
 	Route::get(
-		'/post/{post}',
+		'/posts/{post}',
 		fn () => inertia('Posts/Show')
 	)->name('post-show-view');
 	Route::get(

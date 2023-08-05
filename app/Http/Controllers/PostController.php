@@ -6,6 +6,7 @@ use App\Jobs\Notification;
 use App\Models\Post;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         return inertia('Posts/Index', [
             'user' => auth()->user(),
@@ -25,15 +26,27 @@ class PostController extends Controller
     }
     public function all(Request $request)
     {
+        $q = $request->input('q');
+        $search = $request->has('search') ? $request->input('search') : 'post';
         $page = $request->has('page') ? $request->input('page') : 0;
         $limit = $request->has('limit') ? $request->input('limit') : 15;
-        $posts = Post::orderBy('created_at', 'desc')
+
+        $posts = Post::query();
+        if ($q != '' && $search === 'user') {
+            $users = User::where('name', 'LIKE', '%' . $q . '%')->get();
+            $posts = $posts->WhereBelongsTo($users);
+        }
+        if ($q != '' && $search === 'post') {
+            $posts->where('body', 'LIKE', '%' . $q . '%');
+        }
+        $posts = $posts
+            ->orderBy('created_at', 'desc')
             ->limit($limit)
             ->offset($page)
             ->get()
             ->loadCount('reactions')
-            ->load(['user'])
-            ->toArray();
+            ->load(['user']);
+
 
         return response(
             [

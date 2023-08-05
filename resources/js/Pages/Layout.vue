@@ -1,44 +1,50 @@
 <script setup>
 import Icon from '@/Icons/Icon.vue';
 import { Head, Link } from '@inertiajs/vue3';
-import { onMounted, reactive, ref } from 'vue';
+import { reactive, ref } from 'vue';
+
+
+import { useScroll } from '@/Composables/useScroll.js';
+import Messages from './Posts/Components/Nav/Messages.vue';
+import Notifications from './Posts/Components/Nav/Notifications.vue';
+import Profile from './Posts/Components/Nav/Profile.vue';
+import Search from './Posts/Components/Nav/Search.vue';
+
+const emit = defineEmits(['refetch-post'])
+defineProps({
+	posts: Array,
+	title: String
+})
+
 const center = ref(null)
+useScroll(center, (result) => {
+	if (result.nearOfEnd)
+		emit('refetch-post')
+})
 const menu = reactive({
 	notification: false,
-	search: false,
+	search: true,
 	profile: false,
+	messages: false
 })
+
 const menuClosed = () => !(
 	menu.notification ||
 	menu.search ||
 	menu.profile ||
 	menu.messages
 )
-const emit = defineEmits(['refetch-post'])
-defineProps({
-	posts: Array,
-	title: String
-})
 const loadNav = (nav) => {
 	closeNav()
 	menu[nav] = true
 }
 const closeNav = () => {
-	for (const key in menu) {
-		menu[key] = false
-	}
+	menu.notification = false
+	menu.profile = false
+	menu.messages = false
+	menu.search = false
 }
-onMounted(() => {
-	center.value.addEventListener('scroll', (ev) => {
-		const scrollTopsInScrollHeight = Math.round(center.value.scrollHeight / center.value.scrollTop)
-		if (scrollTopsInScrollHeight <= 1) {
-			setTimeout(() => {
 
-				emit('refetch-post')
-			}, 1000)
-		}
-	})
-})
 </script>
 <template>
 	<Head :title="title" />
@@ -133,10 +139,12 @@ onMounted(() => {
 							<icon name="LeftArrow" />
 						</button>
 					</div>
-					<notification v-if="menu.notification" />
-					<search v-if="menu.search" />
-					<profile v-if="menu.profile" />
-					<messages v-if="menu.messages" />
+					<div class="card-body">
+						<notifications v-if="menu.notification" />
+						<search v-if="menu.search" />
+						<profile v-if="menu.profile" />
+						<messages v-if="menu.messages" />
+					</div>
 				</div>
 			</div>
 		</div>
@@ -169,6 +177,8 @@ onMounted(() => {
 	height: 100vh !important;
 	margin-left: auto !important;
 }
+
+.main-content {}
 
 .icon-btn {
 	width: 2.5rem;
