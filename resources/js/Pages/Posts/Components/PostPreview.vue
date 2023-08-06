@@ -4,7 +4,7 @@ import { Link } from '@inertiajs/vue3';
 const props = defineProps({ post: Object })
 </script>
 <template>
-	<Link as="div" :href="'/posts/' + props.post.id"
+	<Link as="div" :href="'/posts/' + props.post.id + '/show'"
 		class="post__preview card w-100 border-0 border-bottom rounded-0 pt-2 pe-2 ps-2">
 	{{ post.user.name }}
 	<p class="post__preview-body"><span>{{ props.post.body.split('').splice(0, 100).join('') }}...</span>
