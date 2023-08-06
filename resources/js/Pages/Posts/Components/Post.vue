@@ -1,5 +1,7 @@
 <script setup>
 import HeartIcon from '@/Icons/Heart.vue';
+import MessageIcon from '@/Icons/Message.vue';
+import { Link } from '@inertiajs/vue3';
 const emit = defineEmits(['like'])
 const { user, post, index } = defineProps({
 	post: Object,
@@ -30,11 +32,11 @@ const likePost = async () => {
 			<span class="my-2 text-segundary " style="font-size: .8rem;">{{ new Date(post.created_at).toDateString()
 			}}</span>
 		</div>
-		<div>
+		<div class="my-2">
 			<p class="h5">{{ post.body }}</p>
 		</div>
-		<div class="footer border-top border-bottom py-1">
-			<div class="reactions d-flex align-items-center">
+		<div class="footer border-top border-bottom py-1 d-flex align-items-center gap-4">
+			<div class="reactions d-flex gap-2 align-items-center">
 				<button @click="likePost" style="
 					display: grid;
 					place-items: center;
@@ -44,8 +46,22 @@ const likePost = async () => {
 					<heart-icon color="rgb(var(--bs-danger-rgb))" />
 					<!-- <heart-crack-icon color="red" /> -->
 				</button>
-				<span class="reactions-count h6 mx-2">{{
+				<span class="reactions-count h6 mt-1 ">{{
 					post.reactions_count
+				}}</span>
+			</div>
+			<div class="reactions d-flex gap-2 align-items-center">
+				<Link as="button" :href="'/posts/' + post.id + '/show'" style="
+					display: grid;
+					place-items: center;
+					width: 1.5rem;
+					height:1.5rem;
+					" class="btn btn-dark p-0 btn-sm rounded-pill">
+				<message-icon color="var(--bs-light)" />
+				<!-- <heart-crack-icon color="red" /> -->
+				</Link>
+				<span class="reactions-count h6 mt-1 ">{{
+					post?.comments_count || 0
 				}}</span>
 			</div>
 		</div>

@@ -23,7 +23,7 @@ useScroll(center, (result) => {
 })
 const menu = reactive({
 	notification: false,
-	search: true,
+	search: false,
 	profile: false,
 	messages: false
 })

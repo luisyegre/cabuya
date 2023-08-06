@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PostResource;
 use App\Jobs\Notification;
 use App\Models\Post;
 use App\Models\User;
@@ -31,7 +32,7 @@ class PostController extends Controller
         $page = $request->has('page') ? $request->input('page') : 0;
         $limit = $request->has('limit') ? $request->input('limit') : 15;
 
-        $posts = Post::query();
+        $posts = Post::query()->where('post_id', '=', null);
         if ($q != '' && $search === 'user') {
             $users = User::where('name', 'LIKE', '%' . $q . '%')->get();
             $posts = $posts->WhereBelongsTo($users);
@@ -72,7 +73,8 @@ class PostController extends Controller
         $user = Auth::user();
         $post = Post::create([
             'body' => $request->input('body'),
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'post_id' => null
         ]);
         return response([
             'message' => ['content' => 'Post creado', 'type' => 'success']
@@ -80,9 +82,20 @@ class PostController extends Controller
     }
     public function show(Post $post)
     {
-        $post->load('user');
-        $post->loadCount('reactions');
-        return response($post);
+        return response(new PostResource($post));
+    }
+    public function comment(Request $request, int $postId)
+    {
+        $user = auth()->user();
+        $comment = Post::create([
+            'user_id' => $user->id,
+            'post_id' => $postId,
+            'body' => $request->input('body')
+        ]);
+        return response([
+            'message' => 'comment send',
+            'comment' => new PostResource($comment)
+        ], Response::HTTP_CREATED);
     }
     public function like(Post $post)
     {

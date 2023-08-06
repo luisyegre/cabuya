@@ -5,6 +5,7 @@ import { onMounted, reactive, ref } from 'vue';
 import Layout from '../Layout.vue';
 import Post from './Components/Post.vue';
 const { user } = defineProps({
+	postId: Number,
 	user: Object
 })
 // const posts = ref([])

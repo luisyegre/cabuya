@@ -17,6 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string("body");
             $table->foreignId('user_id')->constrained();
+            //ref to post if is null or 0 this is the post otherwhise is it a commentary or subcommentarty
+            $table->unsignedBigInteger('post_id')->nullable(true);
+            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

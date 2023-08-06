@@ -4,7 +4,7 @@ const props = defineProps({
 	name: String,
 	color: String,
 	bgColor: String,
-	size: Number,
+	size: String,
 	customClass: String
 })
 const color = computed(() => (

@@ -15,6 +15,6 @@ onMounted(() => {
 </template>
 <style>
 .msm-icon {
-	fill: var(--primary);
+	fill: v-bind(color);
 }
 </style>

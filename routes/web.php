@@ -27,13 +27,23 @@ Route::middleware('auth:sanctum')->group(function () {
 		[PostController::class, 'like']
 	);
 	Route::post(
+		'/posts/{post_id}/comment',
+		[PostController::class, 'comment']
+	);
+	Route::get(
+		'/posts/{post_id}/show',
+		fn (int $postId) => inertia('Posts/Show', ['postId' => $postId])
+	)->name('post-show-view');
+
+	Route::get(
+		'/posts/{post}',
+		[PostController::class, 'show']
+	);
+	Route::post(
 		'/logout',
 		[AuthController::class, 'logout']
 	)->name('logout');
-	Route::get(
-		'/posts/{post}',
-		fn () => inertia('Posts/Show')
-	)->name('post-show-view');
+
 	Route::get(
 		'/register',
 		fn () => inertia('Auth/Register')
