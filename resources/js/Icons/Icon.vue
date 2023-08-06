@@ -1,5 +1,5 @@
 <script setup>
-import { computed, defineAsyncComponent } from 'vue';
+import { computed } from 'vue';
 const props = defineProps({
 	name: String,
 	color: String,
@@ -10,11 +10,7 @@ const props = defineProps({
 const color = computed(() => (
 	props.color || 'rgb(var(--bs-primary-rgb))'
 ))
-const iconload = computed(
-	() => defineAsyncComponent(
-		() => import(`./${(props.name || 'Bell')}.vue`)
-	)
-)
+const iconload = computed(async () => await import(`./${(props.name || 'Bell')}.vue`))
 
 </script>
 <template>
