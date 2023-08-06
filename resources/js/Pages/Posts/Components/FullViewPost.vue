@@ -45,7 +45,9 @@ const commentPost = async () => {
 <template>
 	<div class="card rounded-3 m-2 p-3">
 		<div class="header d-flex justify-content-between align-items-center ">
-			<p class="my-2 h6">{{ userName(post) }}</p>
+			<p class="h6">
+				<span class="border px-2 rounded-pill ">{{ userName(post) }}</span>
+			</p>
 			<span class="my-2 text-segundary " style="font-size: .8rem;">
 				{{ new Date(post.created_at).toDateString() }}
 			</span>
@@ -75,9 +77,9 @@ const commentPost = async () => {
 					Comentar
 				</button>
 			</div>
-			<div v-if="post?.comments?.length > 0" class="border-start border-2 mt-3 p-2">
-				<div v-for="comment in post?.comments">
-					<p class="h6 ">{{ userName(comment) }}</p>
+			<div v-if="post?.comments?.length > 0" class="border-start border-2 mt-3 p-2 d-flex flex-column gap-2">
+				<div class="" v-for="comment in post?.comments">
+					<p class="h6"><span class="border px-2 rounded-pill ">{{ userName(comment) }}</span></p>
 					<p class="ms-2 mb-0">{{ comment.body }}</p>
 					<div class="footer border-bottom py-1 pt-0 d-flex align-items-center gap-4">
 						<div class="reactions d-flex gap-1 align-items-center">

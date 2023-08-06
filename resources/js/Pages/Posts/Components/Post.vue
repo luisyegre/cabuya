@@ -28,8 +28,9 @@ const likePost = async () => {
 <template>
 	<div class="card rounded-3 m-2 p-3">
 		<div class="header d-flex justify-content-between align-items-center ">
-			<p class="my-2 h6">{{ userName(post) }}</p>
-			<span class="my-2 text-segundary " style="font-size: .8rem;">{{ new Date(post.created_at).toDateString()
+			<p class="h6">
+				<span class="border px-2 rounded-pill ">{{ userName(post) }}</span>
+			</p> <span class="my-2 text-segundary " style="font-size: .8rem;">{{ new Date(post.created_at).toDateString()
 			}}</span>
 		</div>
 		<div class="my-2">

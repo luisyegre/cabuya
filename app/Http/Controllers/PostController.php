@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PostCollection;
 use App\Http\Resources\PostResource;
 use App\Jobs\Notification;
 use App\Models\Post;
@@ -27,12 +28,12 @@ class PostController extends Controller
     }
     public function all(Request $request)
     {
+
+        $posts = Post::query()->where('post_id', '=', null);
         $q = $request->input('q');
         $search = $request->has('search') ? $request->input('search') : 'post';
         $page = $request->has('page') ? $request->input('page') : 0;
         $limit = $request->has('limit') ? $request->input('limit') : 15;
-
-        $posts = Post::query()->where('post_id', '=', null);
         if ($q != '' && $search === 'user') {
             $users = User::where('name', 'LIKE', '%' . $q . '%')->get();
             $posts = $posts->WhereBelongsTo($users);
@@ -45,16 +46,33 @@ class PostController extends Controller
             ->limit($limit)
             ->offset($page)
             ->get()
-            ->loadCount('reactions')
+            ->loadCount(['reactions', 'comments'])
             ->load(['user']);
 
+        return response(new PostCollection($posts));
+    }
+    public function myPosts(Request $request)
+    {
 
-        return response(
-            [
-                'posts' => $posts,
-                'count' => Post::count()
-            ]
-        );
+        $posts = Post::query()->where('post_id', '=', null)->where('user_id', auth()->user()->id);
+        $q = $request->input('q');
+        $search = $request->has('search') ? $request->input('search') : 'post';
+        $page = $request->has('page') ? $request->input('page') : 0;
+        $limit = $request->has('limit') ? $request->input('limit') : 15;
+        if ($q != '' && $search === 'user') {
+        }
+        if ($q != '' && $search === 'post') {
+            $posts->where('body', 'LIKE', '%' . $q . '%');
+        }
+        $posts = $posts
+            ->orderBy('created_at', 'desc')
+            ->limit($limit)
+            ->offset($page)
+            ->get()
+            ->loadCount(['reactions', 'comments'])
+            ->load(['user']);
+
+        return response(new PostCollection($posts));
     }
     public function countPosts(Request $request)
     {
@@ -115,7 +133,7 @@ class PostController extends Controller
         }
         $user = $post->user;
         //notify the owner of post
-        Notification::dispatch($user, $reponseBody['message'])->onQueue('notifications');
+        // Notification::dispatch($user, $reponseBody['message'])->onQueue('notifications');
         return response($reponseBody);
 
 
