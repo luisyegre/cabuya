@@ -85,7 +85,7 @@ function postsUpload() {
 				</div>
 			</div>
 			<div class="border-bottom border-top text-center p-2">
-				<Link class="h6 pt-2">{{ postsUpload() }} posts nuevos
+				<Link href="/" class="h6 pt-2">{{ postsUpload() }} posts nuevos
 				</Link>
 			</div>
 			<div v-for=" post, i  in  posts " class="post-container">
